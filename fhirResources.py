@@ -74,12 +74,20 @@ class Observation(FHIRResource): #the class might be superfluous
 
     return observation_json
 
-#attributes to consider: 
-#class Condition(FHIRResource):
-#  def __init__(self,patientID, '''attributes according to FHIR standard for Condition resource'''):
-#    pass
-
+#may not need all of these attributes (have them in for now to decide which ones to keep later)
 class Condition(FHIRResource):
-  def __init__(self, ):
-    pass
-  
+  def __init__(self, clinicalStatus, verificationStatus, category, severity, code, bodySite, onsetDateTime, patientId, idWithServer = "" ):
+    super().__init__("Condition", patientId)
+    self.clinicalStatus = clinicalStatus
+    self.verificationStatus = verificationStatus
+    self.category = category
+    self.severity = severity
+    self.code = code
+    self.bodySite = bodySite
+    self.onsetDateTime = onsetDateTime
+
+
+  def get_condition_json(self):
+    condition_json = {
+      "resourceType"
+    }

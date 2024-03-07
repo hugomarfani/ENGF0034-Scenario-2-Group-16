@@ -26,17 +26,17 @@ def create_thread_and_run(user_input):
 
 
 
-# Testing code:
-thread1, run1 = create_thread_and_run(
-  "I have been diagnosed with pancreatic cancer, what does this mean for me?"
-)
+# # Testing code:
+# thread1, run1 = create_thread_and_run(
+#   "I have been diagnosed with pancreatic cancer, what does this mean for me?"
+# )
 
 # Pretty printing helper
 def pretty_print(messages):
-    print("# Messages")
+    message = []
     for m in messages:
-        print(f"{m.role}: {m.content[0].text.value}")
-    print()
+        message.append(f"{m.content[0].text.value}")
+    return message[-1]
 
 
 # Waiting in a loop
@@ -50,12 +50,12 @@ def wait_on_run(run, thread):
     return run
 
 
-# Wait for Run 1
-run1 = wait_on_run(run1, thread1)
-pretty_print(get_response(thread1))
+# # Wait for Run 1
+# run1 = wait_on_run(run1, thread1)
+# pretty_print(get_response(thread1))
 
-run1 = submit_message(MEDICAL_ASSISTANT_ID, thread1, "Thank you for your help")
-run1 = wait_on_run(run1, thread1)
+# run1 = submit_message(MEDICAL_ASSISTANT_ID, thread1, "Thank you for your help")
+# run1 = wait_on_run(run1, thread1)
 
-pretty_print(get_response(thread1))
+# pretty_print(get_response(thread1))
 

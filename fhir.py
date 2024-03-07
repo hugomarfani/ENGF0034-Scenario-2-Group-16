@@ -20,7 +20,6 @@ def add_resource(resource, resource_data_json):
     print(f"Error {RequestException}")
 
 
-# Aishani attempt - may be wrong
 def retrieve_resource_data(patientID):
   try:
     response = requests.get(f"{fhir_server_url}/Patient/{patientID}")
