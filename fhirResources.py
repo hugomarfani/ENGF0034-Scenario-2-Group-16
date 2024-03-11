@@ -75,19 +75,67 @@ class Observation(FHIRResource): #the class might be superfluous
     return observation_json
 
 #may not need all of these attributes (have them in for now to decide which ones to keep later)
+#a
 class Condition(FHIRResource):
   def __init__(self, clinicalStatus, verificationStatus, category, severity, code, bodySite, onsetDateTime, patientId, idWithServer = "" ):
     super().__init__("Condition", patientId)
-    self.clinicalStatus = clinicalStatus
-    self.verificationStatus = verificationStatus
-    self.category = category
-    self.severity = severity
-    self.code = code
-    self.bodySite = bodySite
-    self.onsetDateTime = onsetDateTime
+    self.clinicalStatus = clinicalStatus # [system, code]
+    self.verificationStatus = verificationStatus # [system, code]
+    self.category = category # [system, code, display]
+    self.severity = severity # [system, code, display]
+    self.code = code #[[system, code, display], text]
+    self.bodySite = bodySite #[[system, code, display], text]
+    self.onsetDateTime = onsetDateTime #date (string)
 
 
   def get_condition_json(self):
     condition_json = {
-      "resourceType"
+      "resource_type":"Condition",
+      "clinical_status":{
+        "coding":[{
+          "system":self.clinicalStatus[0],
+          "code":self.clinicalStatus[1],
+        }]
+      },
+      "verification_status":{
+        "coding":[{
+          "system":self.verificationStatus[0],
+          "code":self.verificationStatus[1],
+        }]
+      },
+      "category":{
+        "coding":[{
+          "system":self.category[0],
+          "code":self.category[1],
+          "display":self.category[2]
+        }]
+      },
+      "severity":{
+        "coding":[{
+          "system": self.severity[0],
+          "code": self.severity[1]
+        }]
+      },
+      "code":{
+        "coding":[{
+          "system":self.code[0][0],
+          "code":self.code[0][1],
+          "display":self.code[0][2]
+        }],
+        "text":self.code[1]
+      },
+      "bodySite":{
+        "coding":[{
+          "system":self.bodySite[0][0],
+          "code":self.bodySite[0][1],
+          "display":self.bodySite[0][2]
+        }],
+        "text":self.bodySite[1]
+      },
+      "subject":{
+        "reference":f"Patient/{self.patientID}"
+      },
+      "onsetDateTime":self.onsetDateTime
     }
+
+    return condition_json
